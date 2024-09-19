@@ -13,13 +13,23 @@ class _PeopleListState extends State<PeopleList> {
   final _randomNames = RandomNames(Zone.catalonia);
   final _biggerFont = const TextStyle(fontSize: 18);
 
+  void removeName(int index) {
+    setState(() {
+      _suggestions.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(itemBuilder: (context, index) {
       if (_suggestions.length <= index) {
         _suggestions.add(_randomNames.fullName());
       }
-      return CustomTile(name: _suggestions[index], style: _biggerFont);
+      return CustomTile(
+        name: _suggestions[index],
+        style: _biggerFont,
+        onRemove: () => removeName(index),
+      );
     });
   }
 }
